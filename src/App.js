@@ -3,6 +3,7 @@ import {useState } from 'react';
 import Signin from './components/signin/Signin'
 import Register from './components/register/Register'
 import Navigation from './components/navigation/Navigation'
+import NotFound from './components/pages/NotFound'
 import Home from './components/home'
 import {Switch,Route} from "react-router-dom";
 
@@ -22,6 +23,9 @@ function App() {
         </Route>
         <Route exact path='/home' >
           <Home />
+        </Route>
+        <Route >
+          <NotFound />
         </Route>
       </Switch>
     </div>
