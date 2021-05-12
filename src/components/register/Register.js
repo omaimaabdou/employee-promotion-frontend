@@ -28,14 +28,29 @@ const Register = ({onRouteChange})=> {
 		.then(response=>response.json())
 		.then(data=>{
 			if (data.success){
-				localStorage.setItem("token", data.Token);
-				onRouteChange();
-				history.push("/home");
+				fetch('http://localhost:5000/login', {
+				method : 'post',
+				headers : {'Content-Type' : 'application/json'},
+				body : JSON.stringify({
+					username : user.username,
+					password : user.password})
+				})
+				.then(response=>response.json())
+				.then(data=>{
+					if (data.success){
+						localStorage.setItem("token", data.Token);
+						onRouteChange();
+						history.push("/home");
+					}
+					else
+						setError(data.error.message)
+				})
+				.catch( err=> console.log("You are registered but You are Unable to login") )
 			}
 			else 
 				setError(data.error.message)
 		})
-		.catch( err=> console.log(err))
+		.catch( err=> console.log("Unable to register"))
 	}
 
 	  return (
