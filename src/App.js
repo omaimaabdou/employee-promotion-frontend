@@ -18,7 +18,7 @@ function App() {
           <Signin onRouteChange={onRouteChange} />
         </Route>
         <Route exact path="/register" >
-          <Register />
+          <Register onRouteChange={onRouteChange} />
         </Route>
         <Route exact path='/home' >
           <Home />

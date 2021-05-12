@@ -1,43 +1,43 @@
-import React,{Component} from 'react';
+import {useState } from 'react';
+import { useHistory } from "react-router-dom";
 
-class Register extends Component{
-	constructor(props){
-		super(props);
-		this.state = {
-			name : '',
-			email : '',
-			password : ''
-		}
+const Register = ({onRouteChange})=> {
+
+	const [user, setUser] = useState({
+		name : '',
+		username: '',
+		password: ''
+	})
+	const history = useHistory();
+	const [error, setError] = useState("")
+
+	const onInputChange = (e)=>{
+		setUser(Object.assign(user, {[e.target.name]: e.target.value}))
 	}
-	onNamedChange = (event)=>{
-		this.setState({name : event.target.value})
-	}
-	onEmailChange = (event)=>{
-		this.setState({email : event.target.value})
-	}
-	onPasswordChange = (event)=>{
-		this.setState({password : event.target.value})
-	}
-	onSubmitRegister = ()=>{
-		fetch('http://localhost:3001/register', {
+
+	const onSubmitRegister = ()=>{
+		fetch('http://localhost:5000/register', {
 			method : 'post',
 			headers : {'Content-Type' : 'application/json'},
 			body : JSON.stringify({
-				name : this.state.name,
-				email : this.state.email,
-				password : this.state.password
+				"username": user.username,
+			    "password": user.password,
+			    "email": user.email
 			})
 		})
 		.then(response=>response.json())
-		.then(user=>{
-			if (user.id){
-				this.props.loadUser(user);
-				this.props.onRouteChange('home')
+		.then(data=>{
+			if (data.success){
+				localStorage.setItem("token", data.Token);
+				onRouteChange();
+				history.push("/home");
 			}
+			else 
+				setError(data.error.message)
 		})
+		.catch( err=> console.log(err))
 	}
 
-  render(){
 	  return (
 	  	<article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 		    <main className="pa4 black-80">
@@ -49,9 +49,9 @@ class Register extends Component{
 				        <input 
 					        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 					        type="text" 
-					        name="name"  
+					        name="username"  
 					        id="name" 
-					        onChange={this.onNamedChange}
+					        onChange={onInputChange}
 				        />
 				      </div>
 				      <div className="mt3">
@@ -59,9 +59,9 @@ class Register extends Component{
 				        <input 
 					        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 					        type="email" 
-					        name="email-address"  
+					        name="email"  
 					        id="email-address" 
-					        onChange={this.onEmailChange}
+					        onChange={onInputChange}
 				        />
 				      </div>
 				      <div className="mv3">
@@ -71,21 +71,21 @@ class Register extends Component{
 					        type="password" 
 					        name="password"  
 					        id="password" 
-					        onChange={this.onPasswordChange}
+					        onChange={onInputChange}
 				        />
 				      </div>
 			    </fieldset>
 
 			    <div className="">
 			      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Register" 
-			      		onClick={this.onSubmitRegister}
+			      		onClick={onSubmitRegister}
 			      	/>
 			    </div>
 			  </div>
+			  <div> <p className="f6 dim red db" > {error} </p> </div>
 			</main>
 		</article>
 	  );
-	}
 }
 
 export default Register;
