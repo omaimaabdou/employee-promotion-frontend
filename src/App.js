@@ -8,21 +8,19 @@ import Home from './components/home'
 import {Switch,Route} from "react-router-dom";
 
 function App() {
-  const [isSignin, setIsSignin] = useState(false)
-  const onRouteChange = ()=> setIsSignin(!isSignin)
 
   return (
     <div className="App">
-      <Navigation isSignin={isSignin} onRouteChange={onRouteChange} />
+      <Navigation/>
       <Switch>
-        <Route exact  path="/" >
-          <Signin onRouteChange={onRouteChange} />
+        <Route exact path='/' >
+          <Home />
+        </Route>
+        <Route exact  path="/signin" >
+          <Signin />
         </Route>
         <Route exact path="/register" >
-          <Register onRouteChange={onRouteChange} />
-        </Route>
-        <Route exact path='/home' >
-          <Home />
+          <Register />
         </Route>
         <Route >
           <NotFound />

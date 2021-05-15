@@ -1,13 +1,13 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const Navigation = ({onRouteChange,isSignin})=>{
-	if (isSignin) {
+const Navigation = ()=>{
+	if (localStorage.getItem("user")) {
 		return(
 			<nav className='' style={{display : 'flex',justifyContent:'flex-end'}}>
-				<Link to="/register" >
+				<Link to="/signin" >
 					<p className='f3 link dim black underline pa3 pointer'
-					onClick={onRouteChange}
+					onClick={()=> localStorage.clear()}
 					>Sign Out</p>
 				</Link>
 			</nav>
@@ -15,7 +15,7 @@ const Navigation = ({onRouteChange,isSignin})=>{
 	}else{
 		return(
 		<nav className='' style={{display : 'flex',justifyContent:'flex-end'}}>
-			<Link to="/" >
+			<Link to="/signin" >
 				<p className='f3 link dim black underline pa3 pointer'>Sign In</p>
 			</Link>
 			<Link to="/register" >

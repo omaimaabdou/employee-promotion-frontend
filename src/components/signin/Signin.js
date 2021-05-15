@@ -1,7 +1,7 @@
 import {useState } from 'react';
 import { useHistory } from "react-router-dom";
 
-const Signin = ({onRouteChange})=>{
+const Signin = ()=>{
 	const [user, setUser] = useState({
 		username: '',
 		password: ''
@@ -24,8 +24,8 @@ const onSubmitSingIn = ()=>{
 	.then(data=>{
 		if (data.success){
 			localStorage.setItem("token", data.Token);
-			onRouteChange();
-			history.push("/home");
+			localStorage.setItem("user", data.user.username);
+			history.push("/");
 		}
 		else
 			setError(data.error.message)
