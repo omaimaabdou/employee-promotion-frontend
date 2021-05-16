@@ -21,3 +21,23 @@
   background-color: white;
   color: black;
 }
+
+/*---------------------------*/
+#article{
+  position: absolute;
+  top: 20%;
+  right: 35%;
+  overflow: auto; 
+  background-color: white; 
+  display: none;
+}
+#notif{
+  position: absolute;
+  top: 11%;
+  right: 74.8%;
+  width: 20%;
+  text-align: center;
+  height: 7%;
+  padding: 2px 0;
+  display: none;
+}

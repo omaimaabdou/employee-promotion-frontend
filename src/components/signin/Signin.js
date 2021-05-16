@@ -1,5 +1,5 @@
 import {useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link} from "react-router-dom";
 
 const Signin = ()=>{
 	const [user, setUser] = useState({
@@ -44,7 +44,7 @@ const onSubmitSingIn = ()=>{
 					        <label className="db fw6 lh-copy f6" htmlFor="email-address">Username</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-						        type="username" 
+						        type="text" 
 						        name="username"  
 						        id="username-signin"
 						        onChange={ (e)=> onInputChange(e)}  
@@ -68,9 +68,11 @@ const onSubmitSingIn = ()=>{
 				      	/>
 				    </div>
 				    <div className="lh-copy mt3">
-				      	<p className="f6 link pointer dim black db"
+				    <Link to="/register" >
+				      	<p className="f6 link pointer dim black db underline"
 				      	>
 				      	Register</p>
+				    </Link>
 				    </div>
 				  </div>
 				  <div> <p className="f6 dim red db" > {error} </p> </div>
