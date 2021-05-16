@@ -23,7 +23,15 @@
 }
 
 /*---------------------------*/
-#article{
+#article-update{
+  position: absolute;
+  top: 20%;
+  right: 35%;
+  overflow: auto; 
+  background-color: white; 
+  display: none;
+}
+#article-create{
   position: absolute;
   top: 20%;
   right: 35%;

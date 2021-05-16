@@ -9,12 +9,14 @@ import { useHistory, Link} from "react-router-dom";
 import './index.css'
 import deleteIcon from './../../images/deleteIcon-64.png'
 import updateIcon from './../../images/updateIcon-64.png'
+import addIcon from './../../images/addUser.png'
 
 const Index = ()=> {
 	const [employees, setEmployees] = useState([])
 	const [user, setUser] = useState('')
 	const [error, setError] = useState("")
 	const [notification, setNotification] = useState('')
+	const [idUser, setIdUser] = useState('')
 	const [currentUser, setCurrentUser] = useState({
 		id: '',
 		first_name: '',
@@ -22,11 +24,58 @@ const Index = ()=> {
 		email: '',
 		age: ''
 	})
+	const [newUser, setNewUser] = useState({
+		first_name: '',
+		last_name: '',
+		email: '',
+		age: '',
+		grade: '',
+		degree: '',
+		grade_seniority: '',
+		social_situation: ''
+	})
 	let history = useHistory();
 
 	const onInputChange = (e)=>{
 		setCurrentUser(Object.assign(currentUser, {[e.target.name]: e.target.value}))
 	}
+	const onInputChange_create = (e)=>{
+		setNewUser(Object.assign(newUser, {[e.target.name]: e.target.value}))
+	}
+
+	//Create Employee------------------------------------------------------------
+	const onSubmitCreate = ()=>{
+		const selectValue = document.getElementById("social_situation").value
+		Object.assign(newUser, {'social_situation': selectValue})
+		fetch("http://localhost:5000/employee", {
+		method : 'post',
+		headers : {
+			'Content-Type' : 'application/json', 
+			'Authorization': 'Bearer ' + localStorage.getItem("token")
+		},
+		body : JSON.stringify(newUser)
+		})
+		.then(response=>response.json())
+		.then(data=>{
+			if (data.success){
+				getAllEmpl()
+				setNotification("employe created successfully")
+				const article = document.getElementById("article-create");
+				const notif = document.getElementById("notif");
+				article.style.display = "none";
+				notif.style.display = "block"
+				setTimeout(function(){ notif.style.display = "none" }, 3000);
+			}
+			else
+				setError("unable to create employe")
+		})
+		.catch( err=> console.log(err) )
+	}
+	const openCreateForm = ()=>{
+		const article = document.getElementById("article-create");
+		article.style.display = "block";
+	}
+
 	//Update Employee------------------------------------------------------------
 	const onSubmitUpdate = ()=>{
 		const {first_name,last_name,email,age} = currentUser;
@@ -43,7 +92,7 @@ const Index = ()=> {
 			if (data.success){
 				getAllEmpl()
 				setNotification("employe updated successfully")
-				const article = document.getElementById("article");
+				const article = document.getElementById("article-update");
 				const notif = document.getElementById("notif");
 				article.style.display = "none";
 				notif.style.display = "block"
@@ -56,13 +105,13 @@ const Index = ()=> {
 	}
 	const openUpdateForm = (id,first_name,last_name,email,age)=> {
 		setCurrentUser({id,first_name,last_name,email,age})
-		const article = document.getElementById("article");
+		const article = document.getElementById("article-update");
 		article.style.display = "block";
 	}
 
 	//Delete Employee--------------------------------------------------------------
-	const deleteEmpl = (id)=>{
-		fetch(`http://localhost:5000/employee/${id}`, {
+	const deleteEmpl = ()=>{
+		fetch(`http://localhost:5000/employee/${idUser}`, {
 		method : 'delete',
 		headers : {
 			'Content-Type' : 'application/json', 
@@ -85,7 +134,9 @@ const Index = ()=> {
 	}
 	const [open, setOpen] = useState(false);
 
- 	const handleClickOpen = () => {
+ 	const handleClickOpen = (id) => {
+ 		console.log(id)
+ 		setIdUser(id)
     	setOpen(true);
   	};
 
@@ -125,6 +176,7 @@ else
 	return (
 		<div className="w-90 center" >
 			<h1>Welcome <span className='i green' >{user} ...</span></h1>
+			<img onClick={ ()=> openCreateForm()} className="hover-bg-green br-100 fl mt0 pt0 pa2 pointer" src={addIcon} alt="add employe"/>
 			<table id="customers">
 			  <thead>
 				 <tr>
@@ -158,7 +210,7 @@ else
 			  				<td>{employe.updated_at.slice(0,10)}</td>
 			  				<td className="w2" onClick={ ()=> openUpdateForm(employe.uid,employe.first_name,employe.last_name,employe.email,employe.age)} ><img className="w-90 pointer" src={updateIcon} alt="delete employe"/> </td>
 			  				<td className="w2"  >
-		  						<img onClick={ ()=> handleClickOpen()} className="w-90 pointer" src={deleteIcon} alt="delete employe"/> 
+		  						<img onClick={ ()=> handleClickOpen(employe.uid)} className="w-90 pointer" src={deleteIcon} alt="delete employe"/> 
 						      	<Dialog
 							        open={open}
 							        onClose={handleClose}
@@ -175,7 +227,7 @@ else
 							          <Button onClick={handleClose} color="primary">
 							            Disagree
 							          </Button>
-							          <Button onClick={ ()=> deleteEmpl(employe.uid)} color="primary" autoFocus>
+							          <Button onClick={ ()=> deleteEmpl()} color="primary" autoFocus>
 							            Agree
 							          </Button>
 							        </DialogActions>
@@ -187,7 +239,7 @@ else
 			  </tbody>
 			</table>
 			<p id="notif" className="white bg-green" > {notification} </p>
-			<article id="article" className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+			<article id="article-update" className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			    <main className="pa4 black-80">
 				  <div className="measure">
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -239,6 +291,108 @@ else
 				    <div className="">
 				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Update employe" 
 				      		onClick={onSubmitUpdate}
+				      	/>
+				    </div>
+				    <div className="lh-copy mt3">
+				    </div>
+				  </div>
+				  <div> <p className="f6 dim red db" > {error} </p> </div>
+				</main>
+			</article>
+		{/*----------Create Empl--------------------------*/}
+			<article id="article-create" className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+			    <main className="pv0 ph4 black-80">
+				  <div className="measure">
+				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
+					      <div className="mt1">
+					        <label className="db fw6 lh-copy f6" htmlFor="name">First name</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="first_name"  
+						        id="first_name_create"
+						        onChange={ (e)=> onInputChange_create(e)}  
+						     />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="last_name">Last name</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="last_name"
+						        id="last_name_create"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="email" 
+						        name="email" 
+						        id="email_create"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Age</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="number" 
+						        name="age"  
+						        id="age_create"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Grade</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="grade"  
+						        id="grade"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Degree</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="degree"  
+						        id="degree"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Grade seniority</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="number" 
+						        name="grade_seniority"  
+						        id="grade_seniority"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Social situation</label>
+					        <select id="social_situation" class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
+								  <option value=""></option>
+								  <option label="célibataire" value="célibataire">Célibataire</option>
+								  <option label="marié " value="marié">Marié</option>
+							</select>
+					        {/*<input 
+					        						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+					        						        type="text" 
+					        						        name="social_situation"  
+					        						        id="social_situation"
+					        						        onChange={onInputChange_create} 
+					        					        />*/}
+					      </div>
+				    </fieldset>
+				    <div className="">
+				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Create" 
+				      		onClick={onSubmitCreate}
 				      	/>
 				    </div>
 				    <div className="lh-copy mt3">
