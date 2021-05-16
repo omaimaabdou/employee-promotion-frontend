@@ -10,6 +10,7 @@ import './index.css'
 import deleteIcon from './../../images/deleteIcon-64.png'
 import updateIcon from './../../images/updateIcon-64.png'
 import addIcon from './../../images/addUser.png'
+import profileIcon from './../../images/profile.png'
 
 const Index = ()=> {
 	const [employees, setEmployees] = useState([])
@@ -176,7 +177,10 @@ else
 	return (
 		<div className="w-90 center" >
 			<h1>Welcome <span className='i green' >{user} ...</span></h1>
-			<img onClick={ ()=> openCreateForm()} className="hover-bg-green br-100 fl mt0 pt0 pa2 pointer" src={addIcon} alt="add employe"/>
+			<span>
+				<img onClick={ ()=> openCreateForm()} className="hover-bg-green br-100 fr mt0 pt0 pa2 pointer" src={addIcon} alt="add employe"/>
+				<img onClick={ ()=> history.push("/profile")} className=" hover-bg-green br-100 fl mt0 pt0 pa2 pointer" src={profileIcon} alt="add employe"/>
+			</span>
 			<table id="customers">
 			  <thead>
 				 <tr>
@@ -376,18 +380,11 @@ else
 					      </div>
 					      <div className="mv0">
 					        <label className="db fw6 lh-copy f6" htmlFor="age">Social situation</label>
-					        <select id="social_situation" class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
+					        <select id="social_situation" className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
 								  <option value=""></option>
 								  <option label="célibataire" value="célibataire">Célibataire</option>
 								  <option label="marié " value="marié">Marié</option>
 							</select>
-					        {/*<input 
-					        						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-					        						        type="text" 
-					        						        name="social_situation"  
-					        						        id="social_situation"
-					        						        onChange={onInputChange_create} 
-					        					        />*/}
 					      </div>
 				    </fieldset>
 				    <div className="">

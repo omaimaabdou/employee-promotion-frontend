@@ -25,6 +25,8 @@ const onSubmitSingIn = ()=>{
 		if (data.success){
 			localStorage.setItem("token", data.Token);
 			localStorage.setItem("user", data.user.username);
+			localStorage.setItem("email", data.user.email);
+			localStorage.setItem("id", data.user.uid);
 			history.push("/");
 		}
 		else
@@ -61,7 +63,6 @@ const onSubmitSingIn = ()=>{
 					        />
 					      </div>
 				    </fieldset>
-
 				    <div className="">
 				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Sign in" 
 				      		onClick={onSubmitSingIn}
