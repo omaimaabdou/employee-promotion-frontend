@@ -50,7 +50,7 @@ const Index = ()=> {
 	}
 
 	//Create Employee------------------------------------------------------------
-	const onSubmitCreate = ()=>{
+	const onSubmitCreate = (status)=>{
 		const selectValue = document.getElementById("social_situation").value
 		Object.assign(newUser, {'social_situation': selectValue})
 		fetch("http://localhost:5000/employee", {
@@ -65,7 +65,8 @@ const Index = ()=> {
 		.then(data=>{
 			if (data.success){
 				getAllEmpl()
-				window.location.reload(true);
+				if (status)
+					window.location.reload(false);
 				setNotification("employe created successfully")
 				const article =  document.getElementById("article-create");
 				const notif = document.getElementById("notif");
@@ -82,8 +83,11 @@ const Index = ()=> {
 		} )
 	}
 	const openCreateForm = ()=>{
-		const article = document.getElementById("article-create");
-		article.style.display = "block";
+		const article_create = document.getElementById("article-create");
+		const article_update = document.getElementById("article-update");
+		
+		article_update.style.display = "none";
+		article_create.style.display = "block";
 	}
 	const openCreateFirstForm = ()=>{
 		const article = document.getElementById("article-create-first");
@@ -119,8 +123,11 @@ const Index = ()=> {
 	}
 	const openUpdateForm = (id,first_name,last_name,email,age,grade,degree,grade_seniority,social_situation)=> {
 		setCurrentUser({id,first_name,last_name,email,age,grade,degree,grade_seniority,social_situation})
-		const article = document.getElementById("article-update");
-		article.style.display = "block";
+		const article_update = document.getElementById("article-update");
+		const article_create = document.getElementById("article-create");
+		
+		article_create.style.display = "none";
+		article_update.style.display = "block";
 	}
 
 	//Delete Employee--------------------------------------------------------------
@@ -274,7 +281,7 @@ if (!employees.length)
 				    </fieldset>
 				    <div className="">
 				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Create" 
-				      		onClick={onSubmitCreate}
+				      		onClick={ ()=> onSubmitCreate(true)}
 				      	/>
 				    </div>
 				    <div className="lh-copy mt3">
@@ -541,7 +548,7 @@ else
 				    </fieldset>
 				    <div className="">
 				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Create" 
-				      		onClick={onSubmitCreate}
+				      		onClick={ ()=> onSubmitCreate(false)}
 				      	/>
 				    </div>
 				    <div className="lh-copy mt3">

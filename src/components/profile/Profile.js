@@ -9,6 +9,7 @@ function Profile() {
 	const [id, setId] = useState(localStorage.getItem("id"))
 	const [updatedUser, setUpdatedUser] = useState({})
 	const [error, setError] = useState('')
+	const [notification, setNotification] = useState('')
 
 	const onInputChange = (e)=>{
 		setUpdatedUser(Object.assign(updatedUser, {[e.target.name]: e.target.value}))
@@ -32,15 +33,22 @@ function Profile() {
 				localStorage.setItem("user", updatedUser.username);
 				localStorage.setItem("email", updatedUser.email);
 				localStorage.setItem("password", updatedUser.password);
+				setNotification("user was updated successfully")
+				const notif = document.getElementById("notif-profile");
+				notif.style.display = "block"
+				setTimeout(function(){ notif.style.display = "none" }, 3000);
 			}
 			else
 				setError("unable to update user profile")
 		})
-		.catch( err=> console.log(err) )
+		.catch( err=> {
+			console.log(err)
+			setError(err.message+". Please enter your info")
+		} )
 	}
 
 	return (
-		<div>
+		<div className="mt4" >
 			<div className="flex w-60 center" >
 				<article class="mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10">
 				  <div class="tc">
@@ -90,7 +98,10 @@ function Profile() {
 				  </div>
 				</article>
 			</div>
-			<Link className="f5 mr4 pa1 link pointer dim black db underline" to="/">Return to home page</Link>
+			<Link to="/">
+				<p className="f5 mr4 pa1 link pointer dim black db underline" >Return to home page</p>
+			</Link>
+			<p id="notif-profile" className="white bg-green" > {notification} </p>
 		</div>
 	)
 }

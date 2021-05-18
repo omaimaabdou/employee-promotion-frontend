@@ -52,8 +52,16 @@
   top: 11%;
   right: 74.8%;
   width: 20%;
-  text-align: center;
-  height: 7%;
+  height: auto;
+  padding: 2px 0;
+  display: none;
+}
+#notif-profile{
+  position: absolute;
+  top: 11%;
+  right: 2.8%;
+  width: 20%;
+  height: auto;
   padding: 2px 0;
   display: none;
 }
