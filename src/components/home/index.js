@@ -11,6 +11,7 @@ import deleteIcon from './../../images/deleteIcon-64.png'
 import updateIcon from './../../images/updateIcon-64.png'
 import addIcon from './../../images/addUser.png'
 import profileIcon from './../../images/profile.png'
+import Navigation from './../navigation/Navigation'
 
 const Index = ()=> {
 	const [employees, setEmployees] = useState([])
@@ -175,6 +176,8 @@ if (!employees.length)
 	return <h1 className='f1 tc'>LOADING...</h1>;
 else
 	return (
+		<div>
+		<Navigation path="/" />
 		<div className="w-90 center" >
 			<h1>Welcome <span className='i green' >{user} ...</span></h1>
 			<span>
@@ -398,6 +401,7 @@ else
 				  <div> <p className="f6 dim red db" > {error} </p> </div>
 				</main>
 			</article>
+		</div>
 		</div>
 	)
 }

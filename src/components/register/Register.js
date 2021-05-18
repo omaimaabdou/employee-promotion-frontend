@@ -1,5 +1,6 @@
 import {useState } from 'react';
 import { useHistory } from "react-router-dom";
+import Navigation from './../navigation/Navigation'
 
 const Register = ({onRouteChange})=> {
 
@@ -54,6 +55,8 @@ const Register = ({onRouteChange})=> {
 	}
 
 	  return (
+	  	<div>
+	  	<Navigation path="register" />
 	  	<article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 		    <main className="pa4 black-80">
 			  <div className="measure">
@@ -100,6 +103,7 @@ const Register = ({onRouteChange})=> {
 			  <div> <p className="f6 dim red db" > {error} </p> </div>
 			</main>
 		</article>
+		</div>
 	  );
 }
 

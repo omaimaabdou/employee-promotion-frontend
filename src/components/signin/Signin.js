@@ -1,5 +1,6 @@
 import {useState } from 'react';
 import { useHistory, Link} from "react-router-dom";
+import Navigation from './../navigation/Navigation'
 
 const Signin = ()=>{
 	const [user, setUser] = useState({
@@ -37,6 +38,9 @@ const onSubmitSingIn = ()=>{
 
 	//---Render()-------------------------------------------------------------------------------
 	return (
+		<div>
+			
+			<Navigation path="signin" />
 		  	<article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			    <main className="pa4 black-80">
 				  <div className="measure">
@@ -79,6 +83,7 @@ const onSubmitSingIn = ()=>{
 				  <div> <p className="f6 dim red db" > {error} </p> </div>
 				</main>
 			</article>
+		</div>
 		  );
 	
   
