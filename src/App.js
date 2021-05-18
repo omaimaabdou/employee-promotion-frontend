@@ -12,7 +12,6 @@ function App() {
 
   return (
     <div className="App">
-      {/*<Navigation />*/}
       <Switch>
         <Route exact  path="/signin" >
           <Signin />

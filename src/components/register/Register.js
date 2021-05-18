@@ -2,7 +2,7 @@ import {useState } from 'react';
 import { useHistory } from "react-router-dom";
 import Navigation from './../navigation/Navigation'
 
-const Register = ({onRouteChange})=> {
+const Register = ()=> {
 
 	const [user, setUser] = useState({
 		name : '',
@@ -40,8 +40,10 @@ const Register = ({onRouteChange})=> {
 				.then(data=>{
 					if (data.success){
 						localStorage.setItem("token", data.Token);
-						onRouteChange();
-						history.push("/home");
+						localStorage.setItem("user", data.user.username);
+						localStorage.setItem("email", data.user.email);
+						localStorage.setItem("id", data.user.uid);
+						history.push("/");
 					}
 					else
 						setError(data.error.message)

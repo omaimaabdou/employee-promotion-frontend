@@ -24,7 +24,11 @@ const Index = ()=> {
 		first_name: '',
 		last_name: '',
 		email: '',
-		age: ''
+		age: '',
+		grade: '',
+		degree: '',
+		grade_seniority: '',
+		social_situation: ''
 	})
 	const [newUser, setNewUser] = useState({
 		first_name: '',
@@ -61,8 +65,9 @@ const Index = ()=> {
 		.then(data=>{
 			if (data.success){
 				getAllEmpl()
+				window.location.reload(true);
 				setNotification("employe created successfully")
-				const article = document.getElementById("article-create");
+				const article =  document.getElementById("article-create");
 				const notif = document.getElementById("notif");
 				article.style.display = "none";
 				notif.style.display = "block"
@@ -71,23 +76,30 @@ const Index = ()=> {
 			else
 				setError("unable to create employe")
 		})
-		.catch( err=> console.log(err) )
+		.catch( err=> {
+			console.log(err);
+			setError(err.message)
+		} )
 	}
 	const openCreateForm = ()=>{
 		const article = document.getElementById("article-create");
 		article.style.display = "block";
 	}
+	const openCreateFirstForm = ()=>{
+		const article = document.getElementById("article-create-first");
+		article.style.display = "block";
+	}
 
 	//Update Employee------------------------------------------------------------
 	const onSubmitUpdate = ()=>{
-		const {first_name,last_name,email,age} = currentUser;
+		const {first_name,last_name,email,age,grade,degree,grade_seniority,social_situation} = currentUser;
 		fetch(`http://localhost:5000/employee/${currentUser.id}`, {
 		method : 'put',
 		headers : {
 			'Content-Type' : 'application/json', 
 			'Authorization': 'Bearer ' + localStorage.getItem("token")
 		},
-		body : JSON.stringify({first_name,last_name,email,age})
+		body : JSON.stringify({first_name,last_name,email,age,grade,degree,grade_seniority,social_situation})
 		})
 		.then(response=>response.json())
 		.then(data=>{
@@ -105,8 +117,8 @@ const Index = ()=> {
 		})
 		.catch( err=> console.log(err) )
 	}
-	const openUpdateForm = (id,first_name,last_name,email,age)=> {
-		setCurrentUser({id,first_name,last_name,email,age})
+	const openUpdateForm = (id,first_name,last_name,email,age,grade,degree,grade_seniority,social_situation)=> {
+		setCurrentUser({id,first_name,last_name,email,age,grade,degree,grade_seniority,social_situation})
 		const article = document.getElementById("article-update");
 		article.style.display = "block";
 	}
@@ -137,7 +149,6 @@ const Index = ()=> {
 	const [open, setOpen] = useState(false);
 
  	const handleClickOpen = (id) => {
- 		console.log(id)
  		setIdUser(id)
     	setOpen(true);
   	};
@@ -173,7 +184,107 @@ const Index = ()=> {
 	}, [])
 
 if (!employees.length)
-	return <h1 className='f1 tc'>LOADING...</h1>;
+	return (
+		<div>
+			<h1 className='f1 tc'>LOADING...</h1>
+			<h2>if data does not load try to add employees</h2>
+			<img onClick={ ()=> openCreateFirstForm()} className="hover-bg-green br-100 center mt0 pt0 pa2 pointer" src={addIcon} alt="add employe"/>
+			<article id="article-create-first" className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+			    <main className="pv0 ph4 black-80">
+				  <div className="measure">
+				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
+					      <div className="mt1">
+					        <label className="db fw6 lh-copy f6" htmlFor="name">First name</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="first_name"  
+						        id="first_name_create"
+						        onChange={ (e)=> onInputChange_create(e)}  
+						     />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="last_name">Last name</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="last_name"
+						        id="last_name_create"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="email" 
+						        name="email" 
+						        id="email_create"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Age</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="number" 
+						        name="age"  
+						        id="age_create"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Grade</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="grade"  
+						        id="grade"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Degree</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="degree"  
+						        id="degree"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Grade seniority</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="number" 
+						        name="grade_seniority"  
+						        id="grade_seniority"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Social situation</label>
+					        <select id="social_situation" className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
+								  <option value=""></option>
+								  <option label="célibataire" value="célibataire">Célibataire</option>
+								  <option label="marié " value="marié">Marié</option>
+							</select>
+					      </div>
+				    </fieldset>
+				    <div className="">
+				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Create" 
+				      		onClick={onSubmitCreate}
+				      	/>
+				    </div>
+				    <div className="lh-copy mt3">
+				    </div>
+				  </div>
+				  <div> <p className="f6 dim red db" > {error} </p> </div>
+				</main>
+			</article>
+		</div>
+		)
 else
 	return (
 		<div>
@@ -247,10 +358,10 @@ else
 			</table>
 			<p id="notif" className="white bg-green" > {notification} </p>
 			<article id="article-update" className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
-			    <main className="pa4 black-80">
+			    <main className="pv0 ph4 black-80">
 				  <div className="measure">
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-					      <div className="mt3">
+					      <div className="mv0">
 					        <label className="db fw6 lh-copy f6" htmlFor="name">First name</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
@@ -261,7 +372,7 @@ else
 						        onChange={ (e)=> onInputChange(e)}  
 						     />
 					      </div>
-					      <div className="mv3">
+					      <div className="mv0">
 					        <label className="db fw6 lh-copy f6" htmlFor="last_name">Last name</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
@@ -272,7 +383,7 @@ else
 						        onChange={onInputChange} 
 					        />
 					      </div>
-					      <div className="mv3">
+					      <div className="mv0">
 					        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
@@ -283,7 +394,7 @@ else
 						        onChange={onInputChange} 
 					        />
 					      </div>
-					      <div className="mv3">
+					      <div className="mv0">
 					        <label className="db fw6 lh-copy f6" htmlFor="age">Age</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
@@ -293,6 +404,44 @@ else
 						        id="age"
 						        onChange={onInputChange} 
 					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Grade</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="grade"  
+						        id="grade"
+						        onChange={onInputChange} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Degree</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="text" 
+						        name="degree"  
+						        id="degree"
+						        onChange={onInputChange} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Grade seniority</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="number" 
+						        name="grade_seniority"  
+						        id="grade_seniority"
+						        onChange={onInputChange} 
+					        />
+					      </div>
+					      <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Social situation</label>
+					        <select id="social_situation" className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
+								  <option value=""></option>
+								  <option label="célibataire" value="célibataire">Célibataire</option>
+								  <option label="marié " value="marié">Marié</option>
+							</select>
 					      </div>
 				    </fieldset>
 				    <div className="">
