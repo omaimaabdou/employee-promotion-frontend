@@ -28,6 +28,7 @@ const Index = ()=> {
 		grade: '',
 		degree: '',
 		grade_seniority: '',
+		entry_date:'',
 		social_situation: ''
 	})
 	const [newUser, setNewUser] = useState({
@@ -38,6 +39,7 @@ const Index = ()=> {
 		grade: '',
 		degree: '',
 		grade_seniority: '',
+		entry_date:'',
 		social_situation: ''
 	})
 	let history = useHistory();
@@ -96,14 +98,14 @@ const Index = ()=> {
 
 	//Update Employee------------------------------------------------------------
 	const onSubmitUpdate = ()=>{
-		const {first_name,last_name,email,age,grade,degree,grade_seniority,social_situation} = currentUser;
+		const {first_name,last_name,email,age,grade,degree,grade_seniority,entry_date,social_situation} = currentUser;
 		fetch(`http://localhost:5000/employee/${currentUser.id}`, {
 		method : 'put',
 		headers : {
 			'Content-Type' : 'application/json', 
 			'Authorization': 'Bearer ' + localStorage.getItem("token")
 		},
-		body : JSON.stringify({first_name,last_name,email,age,grade,degree,grade_seniority,social_situation})
+		body : JSON.stringify({first_name,last_name,email,age,grade,degree,grade_seniority,entry_date,social_situation})
 		})
 		.then(response=>response.json())
 		.then(data=>{
@@ -121,8 +123,8 @@ const Index = ()=> {
 		})
 		.catch( err=> console.log(err) )
 	}
-	const openUpdateForm = (id,first_name,last_name,email,age,grade,degree,grade_seniority,social_situation)=> {
-		setCurrentUser({id,first_name,last_name,email,age,grade,degree,grade_seniority,social_situation})
+	const openUpdateForm = (id,first_name,last_name,email,age,grade,degree,grade_seniority,entry_date,social_situation)=> {
+		setCurrentUser({id,first_name,last_name,email,age,grade,degree,grade_seniority,entry_date,social_situation})
 		const article_update = document.getElementById("article-update");
 		const article_create = document.getElementById("article-create");
 		
@@ -267,6 +269,16 @@ if (!employees.length)
 						        type="number" 
 						        name="grade_seniority"  
 						        id="grade_seniority"
+						        onChange={onInputChange_create} 
+					        />
+					      </div>
+						  <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Entry date</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="date" 
+						        name="entry_date"  
+						        id="entry_date"
 						        onChange={onInputChange_create} 
 					        />
 					      </div>
@@ -442,6 +454,16 @@ else
 						        onChange={onInputChange} 
 					        />
 					      </div>
+						  <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Entry date</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="date" 
+						        name="entry_date"  
+						        id="entry_date"
+						        onChange={onInputChange} 
+					        />
+					      </div>
 					      <div className="mv0">
 					        <label className="db fw6 lh-copy f6" htmlFor="age">Social situation</label>
 					        <select id="social_situation" className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
@@ -535,6 +557,16 @@ else
 						        name="grade_seniority"  
 						        id="grade_seniority"
 						        onChange={onInputChange_create} 
+					        />
+					      </div>
+						  <div className="mv0">
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Entry date</label>
+					        <input 
+						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+						        type="date" 
+						        name="entry_date"  
+						        id="entry_date"
+						        onChange={onInputChange_create}
 					        />
 					      </div>
 					      <div className="mv0">
