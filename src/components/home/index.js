@@ -53,8 +53,14 @@ const Index = ()=> {
 
 	//Create Employee------------------------------------------------------------
 	const onSubmitCreate = (status)=>{
-		const selectValue = document.getElementById("social_situation").value
+		let selectValue; 
+		if (status == "first_creation")
+			selectValue = document.getElementById("social_situation_first").value
+		else
+			selectValue = document.getElementById("social_situation").value
+		console.log("1==>",selectValue)
 		Object.assign(newUser, {'social_situation': selectValue})
+		console.log("2==>",newUser)
 		fetch("http://localhost:5000/employee", {
 		method : 'post',
 		headers : {
@@ -67,7 +73,7 @@ const Index = ()=> {
 		.then(data=>{
 			if (data.success){
 				getAllEmpl()
-				if (status)
+				if (status == "first_creation")
 					window.location.reload(false);
 				setNotification("employe created successfully")
 				const article =  document.getElementById("article-create");
@@ -284,7 +290,7 @@ if (!employees.length)
 					      </div>
 					      <div className="mv0">
 					        <label className="db fw6 lh-copy f6" htmlFor="age">Social situation</label>
-					        <select id="social_situation" className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
+					        <select id="social_situation_first" className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
 								  <option value=""></option>
 								  <option label="célibataire" value="célibataire">Célibataire</option>
 								  <option label="marié " value="marié">Marié</option>
@@ -293,7 +299,7 @@ if (!employees.length)
 				    </fieldset>
 				    <div className="">
 				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Create" 
-				      		onClick={ ()=> onSubmitCreate(true)}
+				      		onClick={ ()=> onSubmitCreate("first_creation")}
 				      	/>
 				    </div>
 				    <div className="lh-copy mt3">
@@ -466,7 +472,7 @@ else
 					      </div>
 					      <div className="mv0">
 					        <label className="db fw6 lh-copy f6" htmlFor="age">Social situation</label>
-					        <select id="social_situation" className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
+					        <select id="social_situation_update" className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
 								  <option value=""></option>
 								  <option label="célibataire" value="célibataire">Célibataire</option>
 								  <option label="marié " value="marié">Marié</option>
@@ -580,7 +586,7 @@ else
 				    </fieldset>
 				    <div className="">
 				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Create" 
-				      		onClick={ ()=> onSubmitCreate(false)}
+				      		onClick={ ()=> onSubmitCreate("home_creation")}
 				      	/>
 				    </div>
 				    <div className="lh-copy mt3">
