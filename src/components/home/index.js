@@ -56,7 +56,7 @@ const Index = ()=> {
 		let selectValue; 
 		if (status == "first_creation")
 			selectValue = document.getElementById("social_situation_first").value
-		else
+		else if(status == "home_creation")
 			selectValue = document.getElementById("social_situation").value
 		console.log("1==>",selectValue)
 		Object.assign(newUser, {'social_situation': selectValue})
@@ -74,7 +74,7 @@ const Index = ()=> {
 			if (data.success){
 				getAllEmpl()
 				if (status == "first_creation")
-					window.location.reload(false);
+					window.location.reload(true);
 				setNotification("employe created successfully")
 				const article =  document.getElementById("article-create");
 				const notif = document.getElementById("notif");
@@ -87,7 +87,7 @@ const Index = ()=> {
 		})
 		.catch( err=> {
 			console.log(err);
-			setError(err.message)
+			setError(err.message+". Please enter your info")
 		} )
 	}
 	const openCreateForm = ()=>{
@@ -122,6 +122,7 @@ const Index = ()=> {
 				const notif = document.getElementById("notif");
 				article.style.display = "none";
 				notif.style.display = "block"
+				setCurrentUser({})
 				setTimeout(function(){ notif.style.display = "none" }, 3000);
 			}
 			else
@@ -382,6 +383,7 @@ else
 			  </tbody>
 			</table>
 			<p id="notif" className="white bg-green" > {notification} </p>
+		{/*--------------------Update Form-----------------------------------*/}
 			<article id="article-update" className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			    <main className="pv0 ph4 black-80">
 				  <div className="measure">
