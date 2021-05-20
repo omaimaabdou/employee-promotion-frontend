@@ -23,7 +23,7 @@
 }
 
 /*---------------------------*/
-#article-update{
+/*#article-update{
   position: absolute;
   top: 20%;
   right: 35%;
@@ -46,7 +46,7 @@
   overflow: auto; 
   background-color: white; 
   display: none;
-}
+}*/
 #notif{
   position: absolute;
   top: 11%;

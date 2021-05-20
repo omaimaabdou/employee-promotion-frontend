@@ -1,0 +1,13 @@
+#article{
+  position: absolute;
+  top: 20%;
+  right: 35%;
+  overflow: auto; 
+  background-color: white; 
+  display: none;
+}
+.form-close{
+	position: relative;
+	bottom: 0;
+	left: 53%;
+}
