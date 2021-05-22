@@ -1,4 +1,4 @@
-#article{
+#article-create{
   position: absolute;
   top: 20%;
   right: 35%;
@@ -6,6 +6,15 @@
   background-color: white; 
   display: none;
 }
+#article-update{
+  position: absolute;
+  top: 20%;
+  right: 35%;
+  overflow: auto; 
+  background-color: white; 
+  display: none;
+}
+
 .form-close{
 	position: relative;
 	bottom: 0;

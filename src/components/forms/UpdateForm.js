@@ -2,29 +2,23 @@ import React,{useState,useEffect} from 'react'
 import closeIcon from './../../images/close-icons-48.png'
 import './form.css';
 
-function Index({onSubmitUpdate,onSubmitCreate,idEmployee,error,formType}) {
-	
-	const [newEmployee, setNewEmployee] = useState({})
+function UpdateForm({onSubmitUpdate,error,idEmployee}) {
 	const [currentEmpl, setCurrentEmpl] = useState({})
-	const [currentEmpl2, setCurrentEmpl2] = useState({})
+	const [currentEmplAllFields, setCurrentEmplAllFields] = useState({})
 
 	const onInputChange = (e)=>{
-		setNewEmployee(Object.assign(newEmployee, { [e.target.name]: e.target.value }))
 		setCurrentEmpl({ [e.target.name]: e.target.value })
-		setCurrentEmpl2(Object.assign(currentEmpl2, { [e.target.name]: e.target.value }))
+		setCurrentEmplAllFields(Object.assign(currentEmplAllFields, { [e.target.name]: e.target.value }))
 	}
 	const onSelectChange = ()=>{
-		let socialSituation = document.getElementById("social_situation").value;
-		Object.assign(newEmployee, {"social_situation": socialSituation })
-		//Object.assign(currentEmpl, {"social_situation": socialSituation })
-		Object.assign(currentEmpl2, {"social_situation": socialSituation })
+		let socialSituation = document.getElementById("social_situation2").value;
+		Object.assign(currentEmplAllFields, {"social_situation": socialSituation })
 	}
-	const closeForm = ()=> {
-		console.log(currentEmpl)
-		setCurrentEmpl({})
-		let form = document.getElementById("article");
+	const closeUpdateForm = ()=> {
+		let form = document.getElementById("article-update");
 		form.style.display = "none";
 	}
+
 	const getEmplById = ()=>{
 		fetch(`http://localhost:5000/employee/${idEmployee}`, {
 		method : 'get',
@@ -36,8 +30,9 @@ function Index({onSubmitUpdate,onSubmitCreate,idEmployee,error,formType}) {
 		.then(response=>response.json())
 		.then(data=>{
 			if (data.success){
-				setCurrentEmpl(data.data)
-				//setCurrentEmpl2(data.data)
+				let {first_name,last_name,email,age,grade,degree,grade_seniority,entry_date,social_situation} = data.data
+				setCurrentEmpl({first_name,last_name,email,age,grade,degree,grade_seniority,entry_date,social_situation})
+				setCurrentEmplAllFields({first_name,last_name,email,age,grade,degree,grade_seniority,entry_date,social_situation})
 				console.log("CureentUser =>",data.data)
 			}
 			else
@@ -50,22 +45,19 @@ function Index({onSubmitUpdate,onSubmitCreate,idEmployee,error,formType}) {
 	}
 
 	useEffect(() => {
-		setCurrentEmpl({})
-		return () => {
-            if (formType=="Update") {
-				getEmplById();
-			}else
-				setCurrentEmpl({})
-        }
+		if (idEmployee) {
+			getEmplById();
+		}else
+			return
+	}, [idEmployee])
 
-		
-	}, [formType])
+
 
 	return (
-		<article id="article" className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+		<article id="article-update" className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			    <main className="pv0 ph4 black-80">
 				  <div className="measure">
-				  	<img onClick={closeForm} className="pointer form-close" src={closeIcon} alt="close window"/>
+				  	<img onClick={closeUpdateForm} className="pointer form-close" src={closeIcon} alt="close window"/>
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
 					      <div className="mt1">
 					        <label className="db fw6 lh-copy f6" htmlFor="name">First name</label>
@@ -73,7 +65,7 @@ function Index({onSubmitUpdate,onSubmitCreate,idEmployee,error,formType}) {
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 						        type="text" 
 						        name="first_name" 
-						        value= {formType=="Update" ? currentEmpl.first_name : currentEmpl2.first_name}
+						        value= {currentEmpl.first_name}
 						        id="first_name"
 						        onChange={ (e)=> onInputChange(e)}  
 						     />
@@ -157,16 +149,15 @@ function Index({onSubmitUpdate,onSubmitCreate,idEmployee,error,formType}) {
 					      </div>
 					      <div className="mv0">
 					        <label className="db fw6 lh-copy f6" htmlFor="age">Social situation</label>
-					        <select id="social_situation" onChange={onSelectChange} className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
-								  <option value="" > </option>
-								  <option value="célibataire" > célibataire </option>
-								  <option label="marié" value="marié" > marié </option>
+					        <select id="social_situation2" onChange={ (e)=> onInputChange(e)} className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
+								  <option value={currentEmpl.social_situation} > {currentEmpl.social_situation} </option>
+								  <option value={currentEmpl.social_situation=="marié" ? "célibataire" : "marié"} > {currentEmpl.social_situation=="marié" ? "célibataire" : "marié"} </option>
 							</select>
 					      </div>
 				    </fieldset>
 				    <div className="">
-				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value={formType} 
-				      		onClick={ ()=> formType=="Create" ? onSubmitCreate(newEmployee) : onSubmitUpdate(currentEmpl2)}
+				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Update" 
+				      		onClick={ ()=> onSubmitUpdate(currentEmplAllFields)}
 				      	/>
 				    </div>
 				    <div className="lh-copy mt3">
@@ -178,4 +169,4 @@ function Index({onSubmitUpdate,onSubmitCreate,idEmployee,error,formType}) {
 	)
 }
 
-export default Index
+export default UpdateForm
