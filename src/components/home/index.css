@@ -22,35 +22,11 @@
   color: black;
 }
 
-/*---------------------------*/
-/*#article-update{
-  position: absolute;
-  top: 20%;
-  right: 35%;
-  overflow: auto; 
-  background-color: white; 
-  display: none;
-}
-#article-create{
-  position: absolute;
-  top: 20%;
-  right: 35%;
-  overflow: auto; 
-  background-color: white; 
-  display: none;
-}
-#article-create-first{
-  position: absolute;
-  top: 20%;
-  right: 35%;
-  overflow: auto; 
-  background-color: white; 
-  display: none;
-}*/
+
 #notif{
   position: absolute;
-  top: 11%;
-  right: 74.8%;
+  top: 25%;
+  right: 70.8%;
   width: 20%;
   height: auto;
   padding: 2px 0;

@@ -27,7 +27,7 @@ const Navigation = ({path})=>{
 			</Link>
 		</nav>
 	}
-	else
+	else if( path == "signin" ){
 		return <div className="" style={{'marginTop':'2px', 'lineHeight': '0.2'}} >
 			<div className="logo-div"> <img src={Logo} alt=""/> </div>
 			<div>
@@ -35,17 +35,15 @@ const Navigation = ({path})=>{
 				<p>Ministère du Tourisme, de l'Artisanat, du Transport Aérien et de l'Economie Sociale</p>
 			</div>
 		</div>
-	/*else{
-		return(
-		<nav className='' style={{display : 'flex',justifyContent:'flex-end'}}>
-			<Link to="/signin" >
-				<p className='f3 link dim black underline pa3 pointer'>Sign In</p>
-			</Link>
-			<Link to="/register" >
-				<p className='f3 link dim black underline pa3 pointer'>Register</p>
-			</Link>
-		</nav>
-	)
-	}*/
+	}
+	else if( path == "profile" ){
+		return <div className="" style={{'marginTop':'2px', 'lineHeight': '0.2',display : 'flex',justifyContent:'space-between','width':'52%','padding':'0 4px','margin':'0px','alignItems':'center'}} >
+					<div className="logo-div"> <img src={Logo} alt=""/> </div>
+					<div>
+						<p>Royaume de Maroc</p>
+						<p>Ministère du Tourisme, de l'Artisanat, du Transport Aérien et de l'Economie Sociale</p>
+					</div>
+				</div>
+	}
 }
 export default Navigation
