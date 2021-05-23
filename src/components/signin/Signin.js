@@ -45,9 +45,9 @@ const onSubmitSingIn = ()=>{
 			    <main className="pa4 black-80">
 				  <div className="measure">
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-					      <legend className="f1 fw6 ph0 mh0">Sign In</legend>
+					      <legend className="f1 fw6 ph0 mh0">Se Connecter</legend>
 					      <div className="mt3">
-					        <label className="db fw6 lh-copy f6" htmlFor="email-address">Username</label>
+					        <label className="db fw6 lh-copy f6" htmlFor="email-address">Nom d'utilisateur</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 						        type="text" 
@@ -57,7 +57,7 @@ const onSubmitSingIn = ()=>{
 						     />
 					      </div>
 					      <div className="mv3">
-					        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
+					        <label className="db fw6 lh-copy f6" htmlFor="password">Mot de Passe</label>
 					        <input 
 						        className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 						        type="password" 
@@ -68,7 +68,7 @@ const onSubmitSingIn = ()=>{
 					      </div>
 				    </fieldset>
 				    <div className="">
-				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Sign in" 
+				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Se Connecter" 
 				      		onClick={onSubmitSingIn}
 				      	/>
 				    </div>
@@ -76,7 +76,7 @@ const onSubmitSingIn = ()=>{
 				    <Link to="/register" >
 				      	<p className="f6 link pointer dim black db underline"
 				      	>
-				      	Register</p>
+				      	S'inscrire</p>
 				    </Link>
 				    </div>
 				  </div>

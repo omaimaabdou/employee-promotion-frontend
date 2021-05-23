@@ -60,7 +60,7 @@ function UpdateForm({onSubmitUpdate,error,idEmployee}) {
 				  	<img onClick={closeUpdateForm} className="pointer form-close" src={closeIcon} alt="close window"/>
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
 					      <div className="mt1">
-					        <label className="db fw6 lh-copy f6" htmlFor="name">First name</label>
+					        <label className="db fw6 lh-copy f6" htmlFor="name">Prénom</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 						        type="text" 
@@ -71,7 +71,7 @@ function UpdateForm({onSubmitUpdate,error,idEmployee}) {
 						     />
 					      </div>
 					      <div className="mv0">
-					        <label className="db fw6 lh-copy f6" htmlFor="last_name">Last name</label>
+					        <label className="db fw6 lh-copy f6" htmlFor="last_name">Nom</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 						        type="text" 
@@ -104,7 +104,7 @@ function UpdateForm({onSubmitUpdate,error,idEmployee}) {
 					        />
 					      </div>
 					      <div className="mv0">
-					        <label className="db fw6 lh-copy f6" htmlFor="age">Grade</label>
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Profil</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 						        type="text" 
@@ -115,7 +115,7 @@ function UpdateForm({onSubmitUpdate,error,idEmployee}) {
 					        />
 					      </div>
 					      <div className="mv0">
-					        <label className="db fw6 lh-copy f6" htmlFor="age">Degree</label>
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Niveau</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 						        type="text" 
@@ -126,7 +126,7 @@ function UpdateForm({onSubmitUpdate,error,idEmployee}) {
 					        />
 					      </div>
 					      <div className="mv0">
-					        <label className="db fw6 lh-copy f6" htmlFor="age">Grade seniority</label>
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Niveau d'ancienneté</label>
 					        <input 
 						        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 						        type="number" 
@@ -137,7 +137,7 @@ function UpdateForm({onSubmitUpdate,error,idEmployee}) {
 					        />
 					      </div>
 						  <div className="mv0">
-					        <label className="db fw6 lh-copy f6" htmlFor="entry_date">Entry date</label>
+					        <label className="db fw6 lh-copy f6" htmlFor="entry_date">Date d'entrée</label>
 					        <input 
 						        className="pa2 input-reset ba center bg-transparent hover-bg-black hover-white w5" 
 						        type="date" 
@@ -148,7 +148,7 @@ function UpdateForm({onSubmitUpdate,error,idEmployee}) {
 					        />
 					      </div>
 					      <div className="mv0">
-					        <label className="db fw6 lh-copy f6" htmlFor="age">Social situation</label>
+					        <label className="db fw6 lh-copy f6" htmlFor="age">Situation Sociale</label>
 					        <select id="social_situation2" onChange={ (e)=> onInputChange(e)} className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="social_situation">
 								  <option value={currentEmpl.social_situation} > {currentEmpl.social_situation} </option>
 								  <option value={currentEmpl.social_situation=="marié" ? "célibataire" : "marié"} > {currentEmpl.social_situation=="marié" ? "célibataire" : "marié"} </option>
@@ -156,7 +156,7 @@ function UpdateForm({onSubmitUpdate,error,idEmployee}) {
 					      </div>
 				    </fieldset>
 				    <div className="">
-				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Update" 
+				      	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Modifier" 
 				      		onClick={ ()=> onSubmitUpdate(currentEmplAllFields)}
 				      	/>
 				    </div>

@@ -11,7 +11,6 @@ function Profile() {
 	const [email, setEmail] = useState(localStorage.getItem("email"));
 	const [password, setPassword] = useState('')
 
-	const [updatedUser, setUpdatedUser] = useState({})
 	const [error, setError] = useState('')
 	const [notification, setNotification] = useState('')
 
@@ -34,12 +33,8 @@ function Profile() {
 			setEmail(inputValue)
 		else
 			setPassword(inputValue)
-		
-		//setUpdatedUser(Object.assign(updatedUser, {[e.target.name]: e.target.value}))
 	}
 	const updateUser = ()=>{
-		//console.log("YOUR new USER ",{username,password,email})
-		//console.log("updatedUser ",updatedUser)
 		fetch('http://localhost:5000/user', {
 		method : 'put',
 		headers : {
@@ -51,13 +46,9 @@ function Profile() {
 		.then(response=>response.json())
 		.then(data=>{
 			if (data.success){
-				//setUsername(updatedUser.username)
-				//setEmail(updatedUser.email)
-				//setEmail(updatedUser.password)
 				//Store the new user in the localstorage
 				localStorage.setItem("user", username);
 				localStorage.setItem("email", email);
-				//localStorage.setItem("password", password);
 
 				setNotification("user was updated successfully")
 				setError('')
@@ -89,7 +80,7 @@ function Profile() {
 				  <div className="tc">
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
 						      <div className="mt3">
-						        <label className="db fw6 lh-copy f6" htmlFor="email-address">Username</label>
+						        <label className="db fw6 lh-copy f6" htmlFor="email-address">Nom d'utilisateur</label>
 						        <input 
 							        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 							        type="text" 
@@ -111,7 +102,7 @@ function Profile() {
 						        />
 						      </div>
 						      <div className="mv3">
-						        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
+						        <label className="db fw6 lh-copy f6" htmlFor="password">Mot de Passe</label>
 						        <input 
 							        className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 							        type="password" 
@@ -128,7 +119,7 @@ function Profile() {
 							    />
 						      </div>
 					    </fieldset>
-				    	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib hover-white hover-bg-green" type="submit" value="Update" 
+				    	<input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib hover-white hover-bg-green" type="submit" value="Modifier" 
 			      			onClick={updateUser}
 			      		/>
 			      		<p className="f6 dim red db pa0 mt3"> {error} </p>
@@ -136,7 +127,7 @@ function Profile() {
 				</article>
 			</div>
 			<Link to="/">
-				<p className="f5 mr4 pa1 link pointer dim black db underline" >Return to home page</p>
+				<p className="f5 mr4 pa1 link pointer dim black db underline" >Retour à la page d'accueil</p>
 			</Link>
 			<p id="notif-profile" className="white bg-green" > {notification} </p>
 		</div>

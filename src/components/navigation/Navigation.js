@@ -16,7 +16,7 @@ const Navigation = ({path})=>{
 				<Link to="/signin" >
 					<p className='f3 link dim black underline pa3 pointer'
 					onClick={()=> localStorage.clear()}
-					>Sign Out</p>
+					>Se Déconnecter</p>
 				</Link>
 			</nav>
 		)
@@ -30,7 +30,7 @@ const Navigation = ({path})=>{
 					</div>
 			</div>
 			<Link to="/signin" >
-				<p className='f3 link dim black underline pa3 pointer'>Sign In</p>
+				<p className='f3 link dim black underline pa3 pointer'>Se Connecter</p>
 			</Link>
 		</nav>
 	}

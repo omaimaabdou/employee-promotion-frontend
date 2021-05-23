@@ -39,7 +39,6 @@ const Index = ()=> {
 		setError('')
 		setNotification('')
 		const {first_name,last_name,email,age,grade,degree,grade_seniority,entry_date,social_situation} = emplUpdated;
-		console.log('social_situation updated=> ',social_situation)
 		if (first_name && last_name && email && age && grade_seniority && degree && grade_seniority && entry_date && social_situation) {
 			fetch(`http://localhost:5000/employee/${idEmployee}`, {
 			method : 'put',
@@ -53,27 +52,26 @@ const Index = ()=> {
 			.then(data=>{
 				if (data.success){
 					getAllEmpl()
-					setNotification("employe updated successfully")
+					setNotification("employé mis à jour avec succès")
 					setIdEmployee('')
 					articleUpdate.style.display = "none";
 					notif.style.display = "block"
 					setTimeout(function(){ notif.style.display = "none" }, 3000);
 				}
 				else
-					setError("unable to update employe")
+					setError("échec de mise à jour des employés")
 			})
 			.catch( err=> {
 				console.log(err)
-				setError(err.message + ". unable to update employe")
+				setError(err.message + ". échec de mise à jour des employés")
 			} )
 		}else{
-			setError("All fields are required, please fill them all ")
+			setError("Tous les champs sont obligatoires. Veuillez tous les remplir")
 		}
 	}
 
 	//Create Employee------------------------------------------------------------
 	const onSubmitCreate = (newEmpl)=>{
-		//let socialSituation = document.getElementById("social_situation").value;
 		const {first_name,last_name,email,age,grade,degree,grade_seniority,entry_date,social_situation} = newEmpl;
 		setError('')
 		setNotification('')
@@ -90,20 +88,20 @@ const Index = ()=> {
 			.then(data=>{
 				if (data.success){
 					getAllEmpl()
-					setNotification("employe created successfully")
+					setNotification("Employé créé avec succès")
 					articleCreate.style.display = "none";
 					notif.style.display = "block"
 					setTimeout(function(){ notif.style.display = "none" }, 3000);
 				}
 				else
-					setError("unable to create employe")
+					setError("Echec de création d'employé")
 			})
 			.catch( err=> {
 				console.log(err);
 				setError(err.message)
 			} )
 		}else{
-			setError("All fields are required, please fill them all ")
+			setError("Tous les champs sont obligatoires. Veuillez tous les remplir")
 		}
 		
 	}
@@ -114,7 +112,6 @@ const Index = ()=> {
 
 	//Delete Employee--------------------------------------------------------------
 	const deleteEmpl = ()=>{
-		console.log("delete",idEmployee)
 		fetch(`http://localhost:5000/employee/${idEmployee}`, {
 		method : 'delete',
 		headers : {
@@ -125,19 +122,18 @@ const Index = ()=> {
 		.then(data=>{
 			if (data.success){
 				getAllEmpl()
-				setNotification("employe was deleted successfully")
+				setNotification("L'employé a été supprimé avec succès")
 				notif.style.display = "block"
 				setTimeout(function(){ notif.style.display = "none" }, 3000);
 			}
 			else{
-				setNotification("unable to delete employe")
+				setNotification("Echec de la suppression de l'employé")
 				notif.style.display = "block"
 				setTimeout(function(){ notif.style.display = "none" }, 3000);
 			}
 		})
 		.catch( err=> {
-			console.log(err)
-			setNotification("unable to delete employe")
+			setNotification("Echec de la suppression de l'employé")
 			notif.style.display = "block"
 			setTimeout(function(){ notif.style.display = "none" }, 3000);
 		} )
@@ -187,8 +183,8 @@ return (
 		<p id="notif" className="white bg-green" > {notification} </p>
 		{!employees.length ? (
 				<div>
-					<h1 className='f1 tc'>LOADING...</h1>
-					<h2>if data does not load try to add employees</h2>
+					<h1 className='f1 tc'>CHARGEMENT EN COURS...</h1>
+					<h2>Si les données ne se chargent pas, essayez d'ajouter des employés</h2>
 					<img onClick={openCreateForm} className="hover-bg-green br-100 center mt0 pt0 pa2 pointer" src={addIcon} alt="add employe"/>
 				</div>
 			)
@@ -196,7 +192,7 @@ return (
 			<div>
 		<Navigation path="/" />
 		<div className="w-90 center" >
-			<h1>Welcome <span className='i green' >{user} ...</span></h1>
+			<h1>Bienvenue <span className='i green' >{user} ...</span></h1>
 			<span>
 				<img onClick={openCreateForm} className="hover-bg-green br-100 fr mt0 pt0 pa2 pointer" src={addIcon} alt="add employe"/>
 				<img onClick={ ()=> history.push("/profile")} className=" hover-bg-green br-100 fl mt0 pt0 pa2 pointer" src={profileIcon} alt="add employe"/>
@@ -204,17 +200,17 @@ return (
 			<table id="customers">
 			  <thead>
 				 <tr>
-				    <th>First name</th>
-				    <th>Last name</th>
+				    <th>Prénom</th>
+				    <th>Nom</th>
 				    <th>Email</th>
 				    <th>Age</th>
-				    <th>Social Situation</th>
-				    <th>Degree</th>
-				    <th>Grade</th>
-				    <th>Grade seniority</th>
-				    <th>Entry date</th>
-				    <th>Created at</th>
-				    <th>Updated at</th>
+				    <th>Situation Sociale</th>
+				    <th>Niveau</th>
+				    <th>profil</th>
+				    <th>Niveau d'ancienneté</th>
+				    <th>Date d'entrée</th>
+				    <th>Créé en</th>
+				    <th>Mis à jour en</th>
 			   	</tr>
 			  </thead>
 			  <tbody>
@@ -241,18 +237,18 @@ return (
 							        aria-labelledby="alert-dialog-title"
 							        aria-describedby="alert-dialog-description"
 							      >
-							        <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+							        <DialogTitle id="alert-dialog-title">{"Êtes-vous sûr?"}</DialogTitle>
 							        <DialogContent>
 							          <DialogContentText id="alert-dialog-description">
-							            are you sure you want to delete this employe?
+							            êtes-vous sûr de vouloir supprimer cet employeur?
 							          </DialogContentText>
 							        </DialogContent>
 							        <DialogActions>
 							          <Button onClick={handleClose} color="primary">
-							            Disagree
+							            Non
 							          </Button>
 							          <Button onClick={ ()=> deleteEmpl()} color="primary" autoFocus>
-							            Agree
+							            Oui
 							          </Button>
 							        </DialogActions>
 							      </Dialog>
